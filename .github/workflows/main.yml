@@ -17,12 +17,14 @@ jobs:
     runs-on: ubuntu-latest
     environment: trueneutral_aws
     steps:
-    - name: S3 CopyPaste
-      # You may pin to the exact commit or the version.
-      # uses: tpaschalis/s3-cp-action@1e4abeaed395f9598d6503d7987205977b3d4ef2
-      uses: tpaschalis/s3-cp-action@v0.2.0
+    - name: S3 Sync
+    # You may pin to the exact commit or the version.
+    # uses: jakejarvis/s3-sync-action@be0c4ab89158cac4278689ebedd8407dd5f35a83
+    - uses: actions/checkout@master
+    - uses: jakejarvis/s3-sync-action@v0.5.1
+      with:
+        args: --follow-symlinks --delete
       env:
-        FILE: './legislators-current.yaml'
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
